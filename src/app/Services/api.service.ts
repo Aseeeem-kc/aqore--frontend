@@ -8,7 +8,10 @@ export class ApiService {
  private apiUrl = 'https://localhost:7244'
   constructor(private http: HttpClient) { }
 
-  getClients(): Observable<any> {
+  getAllClients(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/client/GetAllClients`);
+  }
+    getAllJobs(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Job/GetAllJobs`);
   }
 }
