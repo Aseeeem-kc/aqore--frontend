@@ -1,31 +1,127 @@
-# Angular Starter Kit for Hackathon
+# Aqore Hackathon 2025 – Innovate Staffing with AI
 
-Welcome to the Angular Starter Kit! This project is designed to help you quickly get started with the hackathon by demonstrating how to fetch and display data from the provided API.
+## Quick Start Instructions
 
-## Overview
+Your challenge is to explore how AI can enhance, automate, or transform staffing software. Think beyond traditional workflows—from candidate sourcing to onboarding, there are endless opportunities for innovation.
 
-- **`api.service.ts`**  
-  This service handles fetching data from the API endpoints.
+Participants are encouraged to propose and build AI-driven features that could reshape the staffing industry. You’re welcome to use the resources provided below or bring your own datasets and models.
 
-- **`dataset.component.ts`**  
-  Contains a method that takes the fetched data and displays it as a table. This component serves as a simple example of how to work with the data.
+---
 
-## Getting Started
+## 🎯 Goal
 
-1. **Clone the repository**  
-   ```bash
-   git clone [REPO_URL]
-Create your own branch
-Feel free to create your own branch to customize and extend this project as you like.
+You are free to define your own challenge statement within the staffing domain. Explore real problems or inefficiencies in the staffing lifecycle and demonstrate how AI can offer a transformative solution.
 
-Modify the code
-You can change the components, services, or add new features. This starter kit is just an example to help you get started faster.
+This is your opportunity to bring fresh, bold, and practical ideas to life, without being confined to predefined use cases.
 
-Notes
-The provided code is a basic example and can be adjusted according to your project needs.
+---
 
-The API endpoints and keys should be configured in the api.service.ts file.
+## 📦 Provided Resources
 
-You’re encouraged to build upon this base to create your own innovative solution.
+### 📊 Dataset API
 
-If you have questions or run into any issues, don’t hesitate to reach out!
+Explore real-world-style staffing data:
+- Candidate profiles (resumes, skills, education, work history)
+- Client/company data
+- Job orders (descriptions, skills, requirements)
+
+**🔗 API Swagger Link:**  
+[https://hackathonapi.aqore.com/swagger/index.html](https://hackathonapi.aqore.com/swagger/index.html)
+
+---
+
+### 💻 Angular Starter Kit (Frontend)
+
+A pre-wired Angular app to quickly build your UI using the sample dataset.
+
+**🔗 GitHub Repo:**  
+[https://github.com/dev-aqore/aqore-hackathon](https://github.com/dev-aqore/aqore-hackathon)
+
+#### 🛠 Step-by-step to run the Angular starter kit:
+
+```bash
+git clone https://github.com/dev-aqore/aqore-hackathon.git
+cd aqore-hackathon
+npm install
+ng serve
+```
+
+---
+
+### 🧠 LLM API
+
+Use this to integrate conversational AI, summarization, classification, or reasoning into your solutions.
+
+**GPT-4o Endpoint:**  
+`https://aqore-hackathon-openai.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01-preview`
+
+**GPT-4o-mini Endpoint:**  
+`https://aqore-hackathon-openai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview`
+
+**API Key:**  
+`dwew112132132eawed32erwedfw3r`
+
+---
+
+### How to Call the LLM API
+
+Use the following parameters to make a `POST` request to the GPT-4o endpoint.
+
+#### 🔹 Method: `POST`  
+#### 🔹 Headers:
+```json
+{
+  "Content-Type": "application/json",
+  "api-key": "dwew112132132eawed32erwedfw3r"
+}
+```
+
+#### 🔹 Body:
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are an AI assistant that helps people find information."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "What is ATS?"
+        }
+      ]
+    }
+  ],
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "max_tokens": 800
+}
+```
+
+---
+
+## 💡 Bring Your Ideas
+
+While you're free to use our starter kits and APIs, you're also encouraged to:
+- Use your own datasets or models
+- Extend the starter kit to include advanced features
+- Build backend logic or use any tech stack you're comfortable with
+
+---
+
+## 🙋 Need Help?
+
+Mentors and technical support will be available throughout the event to help you with the starter kit, API, or LLM integration. Don’t hesitate to ask for assistance.
+
+---
+
+Let’s build the future of staffing together. Good luck! 💡💥
+
+**#HackWithAqore #AIStaffingInnovation**
