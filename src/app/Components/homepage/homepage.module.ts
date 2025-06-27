@@ -4,7 +4,7 @@ import { HomepageComponent } from '../homepage/homepage.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderModule } from '../header/header.module';
 import { TimelineModule } from "../timeline/timeline.module";
-import { PrizeModule } from "../prize/prize.module";
+
 
 
 const routes: Routes = [
@@ -19,8 +19,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     HeaderModule,
-    TimelineModule,
-    PrizeModule
+    TimelineModule
 ],
     exports: [RouterModule]
 })
