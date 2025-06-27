@@ -25,8 +25,7 @@ Explore real-world-style staffing data:
 - Job orders (descriptions, skills, requirements)
 
 **🔗 API Swagger Link:**  
-[https://hackathonapi.aqore.com/swagger/index.html](https://hackathonapi.aqore.com/swagger/index.html)
-
+[https://hackathonapi.aqore.com/swagger/index.html](https://hackathonapi.aqore.com)
 ---
 
 ### 💻 Angular Starter Kit (Frontend)
