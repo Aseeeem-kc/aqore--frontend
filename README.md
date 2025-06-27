@@ -1,7 +1,6 @@
 # Aqore Hackathon 2025 – Innovate Staffing with AI
 
-## Quick Start Instructions
-
+---
 Your challenge is to explore how AI can enhance, automate, or transform staffing software. Think beyond traditional workflows—from candidate sourcing to onboarding, there are endless opportunities for innovation.
 
 Participants are encouraged to propose and build AI-driven features that could reshape the staffing industry. You’re welcome to use the resources provided below or bring your own datasets and models.
@@ -33,6 +32,24 @@ Explore real-world-style staffing data:
 ### 💻 Angular Starter Kit (Frontend)
 
 A pre-wired Angular app to quickly build your UI using the sample dataset.
+
+## 🧰 Prerequisites
+
+To run the Angular app locally, make sure the following are installed:
+
+- **Node.js:** v18.17.0  
+- **npm:** v9.6.7  
+- **Angular CLI:** v16.1.8
+
+To verify, run the following in your terminal:
+
+```bash
+node -v       # should return v18.17.0
+npm -v        # should return 9.6.7
+ng version    # should include Angular CLI 16.1.8
+```
+
+## Quick Start Instructions
 
 **🔗 GitHub Repo:**  
 [https://github.com/dev-aqore/aqore-hackathon](https://github.com/dev-aqore/aqore-hackathon)
