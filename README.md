@@ -52,8 +52,9 @@ Once Node.js and npm are installed, run the following command to install Angular
 
 ```bash
 npm install -g @angular/cli@16.1.8
+```
 
-
+## To verify, run the following in your terminal:
 ```bash
 node -v       # should return v18.17.0
 npm -v        # should return 9.6.7
