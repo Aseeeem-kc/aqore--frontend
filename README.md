@@ -25,7 +25,7 @@ Explore real-world-style staffing data:
 - Job orders (descriptions, skills, requirements)
 
 **🔗 API Swagger Link:**  
-[https://hackathonapi.aqore.com/swagger/index.html](https://hackathonapi.aqore.com)
+[https://hackathonapi.aqore.com](https://hackathonapi.aqore.com)
 ---
 
 ### 💻 Angular Starter Kit (Frontend)
@@ -37,10 +37,22 @@ A pre-wired Angular app to quickly build your UI using the sample dataset.
 To run the Angular app locally, make sure the following are installed:
 
 - **Node.js:** v18.17.0  
-- **npm:** v9.6.7  
-- **Angular CLI:** v16.1.8
+- **npm:** v9.6.7 *(npm v9.6.7 is bundled with Node.js v18.17.0 — no separate download required)*  
+- **Angular CLI:** v16.1.8  
 
-To verify, run the following in your terminal:
+### 📥 Download Links for Node.js v18.17.0:
+
+- [Windows (x64 MSI)](https://nodejs.org/download/release/v18.17.0/node-v18.17.0-x64.msi)  
+- [macOS (PKG)](https://nodejs.org/download/release/v18.17.0/node-v18.17.0.pkg)  
+- [Linux & Others](https://nodejs.org/download/release/v18.17.0/)
+
+### ⚙️ Installing Angular CLI
+
+Once Node.js and npm are installed, run the following command to install Angular CLI:
+
+```bash
+npm install -g @angular/cli@16.1.8
+
 
 ```bash
 node -v       # should return v18.17.0
@@ -74,7 +86,7 @@ Use this to integrate conversational AI, summarization, classification, or reaso
 **GPT-4o-mini Endpoint:**  
 `https://aqore-hackathon-openai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview`
 
-**API Key:**  
+**API Key: (Dummy)**  
 `dwew112132132eawed32erwedfw3r`
 
 ---
@@ -95,30 +107,37 @@ Use the following parameters to make a `POST` request to the GPT-4o endpoint.
 #### 🔹 Body:
 ```json
 {
-  "messages": [
-    {
-      "role": "system",
-      "content": [
-        {
-          "type": "text",
-          "text": "You are an AI assistant that helps people find information."
-        }
-      ]
-    },
-    {
-      "role": "user",
-      "content": [
-        {
-          "type": "text",
-          "text": "What is ATS?"
-        }
-      ]
-    }
-  ],
-  "temperature": 0.7,
-  "top_p": 0.95,
-  "max_tokens": 800
+"messages": [
+   {
+     "role": "system",
+     "content": [
+       {
+         "type": "text",
+         "text": "You are an AI assistant that helps people find information."
+       }
+     ]
+   },
+   {
+     "role": "user",
+     "content": [
+       {
+         "type": "text",
+         "text": "What is in this image?"
+       },
+       {
+         "type": "image_url",
+         "image_url": {
+           "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTalcyznmxYOyHtGPWEnTIDh3vNIGBDh9qjeA&s"
+         }
+       }
+     ]
+   }
+],
+"temperature": 0.7,
+"top_p": 0.95,
+"max_tokens": 800
 }
+ 
 ```
 
 ---
