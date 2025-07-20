@@ -1,31 +1,47 @@
 <section id="timeline" class="py-20 bg-white">
   <div class="container mx-auto px-6 max-w-5xl">
-    <h2 class="text-4xl font-extrabold mb-12 text-center text-gray-900 animate-fade-in">Hackathon Timeline</h2>
+    <h2 class="text-4xl font-extrabold mb-12 text-center text-gray-900 animate-fade-in">Explore Roles on Staff-Tech</h2>
     <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-center">
-      <!-- Timeline Item 1 -->
+      
+      <!-- Data Scientist -->
       <div
-        class="p-8 bg-blue-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-300 border border-blue-200">
-        <div class="mb-4 text-4xl text-blue-600">🚀</div>
-        <h3 class="text-2xl font-bold mb-2 text-blue-800">Kickoff</h3>
-        <p class="text-lg text-gray-700">June 19th, 2025</p>
-        <p class="text-sm text-gray-500 mt-2">Dive into AI for staffing software, theme deep dive & challenges.</p>
+        class="p-8 bg-blue-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-300 border border-blue-200 cursor-pointer"
+        (click)="navigateToCVUpload('Data Scientist')">
+        <div class="mb-4 text-4xl text-blue-600">📊</div>
+        <h3 class="text-2xl font-bold mb-2 text-blue-800">Data Scientist</h3>
+        <ul class="text-sm text-gray-700 text-left list-disc list-inside">
+          <li>Highlight Python, SQL, and ML tools</li>
+          <li>Showcase Kaggle or project links</li>
+          <li>Get matched based on domain expertise</li>
+        </ul>
       </div>
-      <!-- Timeline Item 2 -->
+      
+      <!-- Frontend Developer -->
       <div
-        class="p-8 bg-purple-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-400 border border-purple-200">
+        class="p-8 bg-purple-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-400 border border-purple-200 cursor-pointer"
+        (click)="navigateToCVUpload('Frontend Developer')">
         <div class="mb-4 text-4xl text-purple-600">💻</div>
-        <h3 class="text-2xl font-bold mb-2 text-purple-800">Hack Weekend</h3>
-        <p class="text-lg text-gray-700">July 19th - 20th, 2025</p>
-        <p class="text-sm text-gray-500 mt-2">Intensive development of AI staffing solutions.</p>
+        <h3 class="text-2xl font-bold mb-2 text-purple-800">Frontend Developer</h3>
+        <ul class="text-sm text-gray-700 text-left list-disc list-inside">
+          <li>Highlight skills in React, Vue, or Tailwind</li>
+          <li>Add GitHub and live project links</li>
+          <li>Track applied jobs in your dashboard</li>
+        </ul>
       </div>
-      <!-- Timeline Item 3 -->
+      
+      <!-- UI/UX Designer -->
       <div
-        class="p-8 bg-green-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-500 border border-green-200">
-        <div class="mb-4 text-4xl text-green-600">🏆</div>
-        <h3 class="text-2xl font-bold mb-2 text-green-800">Demo & Awards</h3>
-        <p class="text-lg text-gray-700">June 20th, 2025</p>
-        <p class="text-sm text-gray-500 mt-2">Showcase your AI staffing software innovations.</p>
+        class="p-8 bg-green-50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-fade-in-up delay-500 border border-green-200 cursor-pointer"
+        (click)="navigateToCVUpload('UI/UX Designer')">
+        <div class="mb-4 text-4xl text-green-600">🎨</div>
+        <h3 class="text-2xl font-bold mb-2 text-green-800">UI/UX Designer</h3>
+        <ul class="text-sm text-gray-700 text-left list-disc list-inside">
+          <li>Upload design portfolios (Figma, Adobe XD)</li>
+          <li>List tools and testing experience</li>
+          <li>Find remote and on-site opportunities</li>
+        </ul>
       </div>
+
     </div>
   </div>
 </section>

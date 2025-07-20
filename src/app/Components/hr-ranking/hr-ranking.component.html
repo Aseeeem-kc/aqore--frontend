@@ -1,0 +1,164 @@
+<div class="hr-ranking-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="container mx-auto px-6 py-8">
+      <div class="text-center">
+        <button (click)="goBack()" class="back-btn">
+          ← Back to Homepage
+        </button>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">HR Candidate Rankings</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          View and analyze candidate rankings based on AI-powered resume analysis
+        </p>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons mt-6">
+          <button (click)="refreshRankings()" class="refresh-btn" [disabled]="loading" [class.disabled]="loading">
+            🔄 {{ loading ? 'Loading...' : 'Refresh Rankings' }}
+          </button>
+          <button (click)="exportRankings()" class="export-btn" [disabled]="candidates.length === 0">
+            📊 Export Rankings
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 pb-12">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Loading State -->
+      <div class="loading-container" *ngIf="loading">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading candidate rankings...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-container" *ngIf="error && !loading">
+        <div class="error-content">
+          <span class="error-icon">⚠️</span>
+          <span>{{ error }}</span>
+        </div>
+        <button (click)="refreshRankings()" class="retry-btn">
+          Try Again
+        </button>
+      </div>
+
+      <!-- Rankings Table -->
+      <div class="rankings-section" *ngIf="!loading && !error">
+        
+                 <!-- Summary Stats -->
+         <div class="stats-grid mb-8">
+           <div class="stat-card">
+             <div class="stat-number">{{ totalCandidates }}</div>
+             <div class="stat-label">Total Candidates</div>
+           </div>
+           <div class="stat-card">
+             <div class="stat-number">{{ excellentCandidates }}</div>
+             <div class="stat-label">Excellent (80+)</div>
+           </div>
+           <div class="stat-card">
+             <div class="stat-number">{{ goodCandidates }}</div>
+             <div class="stat-label">Good (70-79)</div>
+           </div>
+           <div class="stat-card">
+             <div class="stat-number">{{ needsImprovementCandidates }}</div>
+             <div class="stat-label">Needs Improvement</div>
+           </div>
+         </div>
+
+        <!-- Rankings Table -->
+        <div class="rankings-table-container">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Candidate Rankings</h2>
+          
+          <div class="table-wrapper">
+            <table class="rankings-table">
+              <thead>
+                <tr>
+                  <th class="rank-header">Rank</th>
+                  <th class="name-header">Candidate Name</th>
+                  <th class="email-header">Email</th>
+                  <th class="score-header">Score</th>
+                  <th class="actions-header">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let candidate of candidates; let i = index" class="candidate-row">
+                  <td class="rank-cell">
+                    <span class="rank-icon">{{ getRankIcon(i + 1) }}</span>
+                  </td>
+                  <td class="name-cell">
+                    <div class="candidate-name">{{ candidate.candidate_name }}</div>
+                  </td>
+                  <td class="email-cell">
+                    <div class="candidate-email">{{ candidate.candidate_email }}</div>
+                  </td>
+                  <td class="score-cell">
+                    <div class="score-badge" [class]="getScoreColor(candidate.total_score)">
+                      <span class="score-number">{{ candidate.total_score }}</span>
+                      <span class="score-label">{{ getScoreLabel(candidate.total_score) }}</span>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <button (click)="viewCandidateReport(candidate)" class="view-btn">
+                      📋 View Report
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="candidates.length === 0">
+            <div class="empty-icon">📊</div>
+            <h3 class="empty-title">No Rankings Available</h3>
+            <p class="empty-text">No candidate rankings have been generated yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Candidate Report Modal -->
+  <div class="modal-overlay" *ngIf="showReport" (click)="closeReport()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Candidate Report - {{ selectedCandidate?.candidate_name }}</h3>
+        <button (click)="closeReport()" class="close-btn">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="candidate-info">
+          <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ selectedCandidate?.candidate_email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Total Score:</span>
+            <span class="info-value score-highlight" [class]="getScoreColor(selectedCandidate?.total_score || 0)">
+              {{ selectedCandidate?.total_score }}/100
+            </span>
+          </div>
+        </div>
+
+                 <div class="report-content">
+           <h4 class="report-title">Detailed Analysis Report</h4>
+           <div class="report-text">{{ selectedCandidate?.report }}</div>
+         </div>
+
+        <div class="resume-preview">
+          <h4 class="resume-title">Resume Preview</h4>
+          <div class="resume-content">
+            <pre>{{ selectedCandidate?.candidate_resume }}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="closeReport()" class="close-modal-btn">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 

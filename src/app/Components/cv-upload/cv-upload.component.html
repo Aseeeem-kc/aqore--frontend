@@ -1,0 +1,219 @@
+<div class="cv-upload-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="container mx-auto px-6 py-8">
+      <div class="text-center">
+        <button (click)="goBack()" class="back-btn">
+          ← Back to Homepage
+        </button>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">CV Upload & AI Analysis</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Upload your CV and get instant AI-powered analysis with candidate feedback and HR insights
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 pb-12">
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Upload Form Section -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" *ngIf="!uploadResult">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Upload Your CV</h2>
+        
+        <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="candidate_name" class="block text-sm font-medium text-gray-700 mb-2">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="candidate_name"
+              formControlName="candidate_name"
+              class="form-input"
+              placeholder="Enter your full name"
+              [class.error]="uploadForm.get('candidate_name')?.invalid && uploadForm.get('candidate_name')?.touched"
+            >
+            <div class="error-message" *ngIf="uploadForm.get('candidate_name')?.invalid && uploadForm.get('candidate_name')?.touched">
+              <span *ngIf="uploadForm.get('candidate_name')?.errors?.['required']">Full name is required</span>
+              <span *ngIf="uploadForm.get('candidate_name')?.errors?.['minlength']">Name must be at least 2 characters</span>
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group">
+            <label for="candidate_email" class="block text-sm font-medium text-gray-700 mb-2">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="candidate_email"
+              formControlName="candidate_email"
+              class="form-input"
+              placeholder="Enter your email address"
+              [class.error]="uploadForm.get('candidate_email')?.invalid && uploadForm.get('candidate_email')?.touched"
+            >
+            <div class="error-message" *ngIf="uploadForm.get('candidate_email')?.invalid && uploadForm.get('candidate_email')?.touched">
+              <span *ngIf="uploadForm.get('candidate_email')?.errors?.['required']">Email is required</span>
+              <span *ngIf="uploadForm.get('candidate_email')?.errors?.['email']">Please enter a valid email address</span>
+            </div>
+          </div>
+
+          <!-- Position Applied For -->
+          <div class="form-group">
+            <label for="position_applied" class="block text-sm font-medium text-gray-700 mb-2">
+              Position Applied For *
+            </label>
+            <input
+              type="text"
+              id="position_applied"
+              formControlName="position_applied"
+              class="form-input"
+              placeholder="e.g., Frontend Developer, Data Scientist, UI/UX Designer"
+              [class.error]="uploadForm.get('position_applied')?.invalid && uploadForm.get('position_applied')?.touched"
+            >
+            <div class="error-message" *ngIf="uploadForm.get('position_applied')?.invalid && uploadForm.get('position_applied')?.touched">
+              <span *ngIf="uploadForm.get('position_applied')?.errors?.['required']">Position is required</span>
+              <span *ngIf="uploadForm.get('position_applied')?.errors?.['minlength']">Position must be at least 2 characters</span>
+            </div>
+          </div>
+
+          <!-- CV File Upload -->
+          <div class="form-group">
+            <label for="cv_file" class="block text-sm font-medium text-gray-700 mb-2">
+              CV File *
+            </label>
+            <div class="file-upload-container">
+              <input
+                type="file"
+                id="cv_file"
+                (change)="onFileSelected($event)"
+                class="file-input"
+                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.bmp,.tiff,.avif,.webp"
+              >
+              <div class="file-upload-area" [class.has-file]="selectedFile">
+                <div class="file-upload-content">
+                  <div class="upload-icon">📄</div>
+                  <div class="upload-text">
+                    <span *ngIf="!selectedFile">Click to upload or drag and drop</span>
+                    <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+                  </div>
+                  <div class="file-info" *ngIf="selectedFile">
+                    <span class="file-size">{{ getFileSizeString(selectedFile.size) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="file-requirements">
+              <p class="text-sm text-gray-500">
+                Supported formats: PDF, DOC, DOCX, TXT, JPG, JPEG, PNG, BMP, TIFF, AVIF, WEBP
+              </p>
+              <p class="text-sm text-gray-500">Maximum file size: 10MB</p>
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          <div class="error-alert" *ngIf="errorMessage">
+            <div class="error-content">
+              <span class="error-icon">⚠️</span>
+              <span>{{ errorMessage }}</span>
+            </div>
+            <button type="button" (click)="retryUpload()" class="retry-btn">
+              Try Again
+            </button>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="submit-section">
+            <button
+              type="submit"
+              [disabled]="isUploading || uploadForm.invalid"
+              class="submit-btn"
+              [class.loading]="isUploading"
+            >
+              <span *ngIf="!isUploading">Upload CV & Analyze</span>
+              <span *ngIf="isUploading">Processing...</span>
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Upload Progress -->
+        <div class="progress-container" *ngIf="isUploading">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+          </div>
+          <div class="progress-text">
+            <span *ngIf="uploadProgress < 50">Uploading file...</span>
+            <span *ngIf="uploadProgress >= 50 && uploadProgress < 100">Processing CV with AI...</span>
+            <span *ngIf="uploadProgress === 100">Analysis complete!</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Results Section -->
+      <div class="results-section" *ngIf="uploadResult">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+          <div class="results-header">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Analysis Complete!</h2>
+            <p class="text-gray-600">Your CV has been successfully analyzed</p>
+          </div>
+
+          <!-- File Details -->
+          <div class="file-details-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">File Details</h3>
+            <div class="file-details-grid">
+              <div class="detail-item">
+                <span class="detail-label">File Name:</span>
+                <span class="detail-value">{{ uploadResult.file_name }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">File Size:</span>
+                <span class="detail-value">{{ uploadResult.file_size }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Processing Status:</span>
+                <span class="detail-value status-success">{{ uploadResult.processing_status }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Text Extracted:</span>
+                <span class="detail-value">{{ uploadResult.extracted_text_length }} characters</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Candidate Feedback -->
+          <div class="feedback-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Candidate Feedback</h3>
+            <div class="feedback-content">
+              <p>{{ uploadResult.candidate_feedback }}</p>
+            </div>
+          </div>
+
+          <!-- HR Analysis -->
+          <div class="analysis-card">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">HR Analysis</h3>
+            <div class="analysis-content">
+              <p>{{ uploadResult.hr_analysis }}</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button (click)="downloadResults()" class="download-btn">
+              📥 Download Results
+            </button>
+            <button (click)="uploadResult = null" class="new-upload-btn">
+              📄 Upload Another CV
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div> 

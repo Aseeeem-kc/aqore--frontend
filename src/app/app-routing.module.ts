@@ -8,6 +8,16 @@ const routes: Routes = [
       import('./Components/dataset/dataset.module').then(m => m.DatasetModule)
   },
   {
+    path: 'cv-upload',
+    loadChildren: () =>
+      import('./Components/cv-upload/cv-upload.module').then(m => m.CVUploadModule)
+  },
+  {
+    path: 'hr',
+    loadChildren: () =>
+      import('./Components/hr-ranking/hr-ranking.module').then(m => m.HRRankingModule)
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadChildren: () =>

@@ -1,0 +1,577 @@
+.hr-ranking-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-bottom: 2rem;
+
+  .header-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+
+    .back-btn {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #e5e7eb;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      color: #6b7280;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+
+      &:hover {
+        background: white;
+        border-color: #3b82f6;
+        color: #3b82f6;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .refresh-btn,
+      .export-btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .refresh-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      .export-btn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Loading State
+  .loading-container {
+    text-align: center;
+    padding: 4rem 2rem;
+
+    .loading-spinner {
+      width: 3rem;
+      height: 3rem;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .loading-text {
+      color: #6b7280;
+      font-size: 1.125rem;
+    }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  // Error State
+  .error-container {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    margin: 2rem 0;
+
+    .error-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: #dc2626;
+      margin-bottom: 1rem;
+
+      .error-icon {
+        font-size: 1.5rem;
+      }
+    }
+
+    .retry-btn {
+      background-color: #dc2626;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #b91c1c;
+      }
+    }
+  }
+
+  // Stats Grid
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      border: 1px solid #e5e7eb;
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Rankings Table
+  .rankings-table-container {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .rankings-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th {
+        background-color: #f8fafc;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: #374151;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+        vertical-align: middle;
+      }
+
+      .candidate-row {
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #f9fafb;
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+
+      .rank-cell {
+        width: 80px;
+        text-align: center;
+
+        .rank-icon {
+          font-size: 1.25rem;
+          font-weight: 600;
+        }
+      }
+
+      .name-cell {
+        .candidate-name {
+          font-weight: 600;
+          color: #1f2937;
+        }
+      }
+
+      .email-cell {
+        .candidate-email {
+          color: #6b7280;
+          font-size: 0.875rem;
+        }
+      }
+
+      .score-cell {
+        .score-badge {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          font-weight: 600;
+
+          .score-number {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+          }
+
+          .score-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+        }
+      }
+
+      .actions-cell {
+        .view-btn {
+          background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+          }
+        }
+      }
+    }
+  }
+
+  // Empty State
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-text {
+      color: #6b7280;
+    }
+  }
+
+  // Modal Styles
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+
+    .modal-content {
+      background: white;
+      border-radius: 0.75rem;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+
+        .modal-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #1f2937;
+        }
+
+        .close-btn {
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          color: #6b7280;
+          cursor: pointer;
+          padding: 0.25rem;
+          border-radius: 0.25rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+          }
+        }
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+
+        .candidate-info {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+          margin-bottom: 2rem;
+          padding: 1rem;
+          background-color: #f8fafc;
+          border-radius: 0.5rem;
+
+          .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+
+            .info-label {
+              font-size: 0.875rem;
+              color: #6b7280;
+              font-weight: 500;
+            }
+
+            .info-value {
+              font-weight: 600;
+              color: #1f2937;
+
+              &.score-highlight {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.25rem 0.75rem;
+                border-radius: 0.375rem;
+                font-size: 0.875rem;
+              }
+            }
+          }
+        }
+
+        .report-content {
+          margin-bottom: 2rem;
+
+          .report-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+          }
+
+          .report-text {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            line-height: 1.6;
+            color: #374151;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+          }
+        }
+
+        .resume-preview {
+          .resume-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+          }
+
+          .resume-content {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            max-height: 300px;
+            overflow-y: auto;
+
+            pre {
+              margin: 0;
+              white-space: pre-wrap;
+              font-family: 'Courier New', monospace;
+              font-size: 0.875rem;
+              color: #374151;
+              line-height: 1.4;
+            }
+          }
+        }
+      }
+
+      .modal-footer {
+        padding: 1.5rem;
+        border-top: 1px solid #e5e7eb;
+        text-align: right;
+
+        .close-modal-btn {
+          background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+          color: white;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .hr-ranking-container {
+    .header-section {
+      padding: 1rem;
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+
+        .refresh-btn,
+        .export-btn {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+      }
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+
+      .stat-card {
+        padding: 1rem;
+
+        .stat-number {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .rankings-table {
+      font-size: 0.875rem;
+
+      th,
+      td {
+        padding: 0.75rem 0.5rem;
+      }
+
+      .rank-cell {
+        width: 60px;
+      }
+    }
+
+    .modal-overlay {
+      padding: 0.5rem;
+
+      .modal-content {
+        .modal-body {
+          padding: 1rem;
+
+          .candidate-info {
+            grid-template-columns: 1fr;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation Classes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hr-ranking-container {
+  animation: fadeIn 0.6s ease-out;
+
+  .stats-grid,
+  .rankings-table-container {
+    animation: slideIn 0.4s ease-out;
+  }
+} 
