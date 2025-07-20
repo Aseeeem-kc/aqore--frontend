@@ -1,0 +1,25 @@
+<div class="chatbot-fab" (click)="toggleChat()" *ngIf="!isOpen">
+  💬
+</div>
+
+<div class="chatbot-panel" *ngIf="isOpen">
+  <div class="chatbot-header">
+    <span>AI Chatbot</span>
+    <button class="close-btn" (click)="closeChat()">×</button>
+  </div>
+  <div class="chatbot-messages">
+    <div *ngFor="let msg of messages" [ngClass]="msg.sender">
+      <span class="msg-text">{{ msg.text }}</span>
+    </div>
+    <div *ngIf="loading" class="bot loading">...
+      <span class="msg-text">Thinking...</span>
+    </div>
+  </div>
+  <div class="chatbot-error" *ngIf="error">
+    <span>{{ error }}</span>
+  </div>
+  <form class="chatbot-input" (submit)="$event.preventDefault(); sendMessage();">
+    <textarea [(ngModel)]="userInput" name="chatInput" rows="1" placeholder="Type your question..." (keydown)="handleKeydown($event)" [disabled]="loading"></textarea>
+    <button type="submit" [disabled]="loading || !userInput.trim()">Send</button>
+  </form>
+</div> 
