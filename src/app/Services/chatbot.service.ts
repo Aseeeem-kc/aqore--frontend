@@ -1,36 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-export interface ChatbotResponse {
-  response: string;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ChatbotService {
-  private baseUrl = 'http://localhost:8000';
+  // Use a relative URL so Angular proxy handles CORS
+  private apiUrl = 'http://localhost:8000/chatbot/';
 
-  constructor(private http: HttpClient) { }
 
-  sendQuery(query: string): Observable<ChatbotResponse> {
-    const url = `${this.baseUrl}/chatbot/chat/`;
-    return this.http.post<ChatbotResponse>(url, { query })
+  constructor(private http: HttpClient) {}
+
+  sendMessage(query: string): Observable<{ response: string }> {
+    return this.http.post<{ response: string }>(`${this.apiUrl}chat/`, { query })
       .pipe(
         retry(1),
-        catchError(this.handleError)
+        catchError(err => throwError(() => err))
       );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An error occurred while communicating with the chatbot.';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Client Error: ${error.error.message}`;
-    } else {
-      errorMessage = error.error?.message || `Server error: ${error.status}`;
-    }
-    return throwError(() => ({ error: { message: errorMessage } }));
+  checkHealth(): Observable<{ status: string, message: string }> {
+    return this.http.get<{ status: string, message: string }>(`${this.apiUrl}health/`)
+      .pipe(
+        retry(1),
+        catchError(err => throwError(() => err))
+      );
   }
 } 

@@ -18,8 +18,8 @@
   <div class="chatbot-error" *ngIf="error">
     <span>{{ error }}</span>
   </div>
-  <form class="chatbot-input" (submit)="$event.preventDefault(); sendMessage();">
+  <form class="chatbot-input" ngNoForm (submit)="$event.preventDefault(); sendMessage();">
     <textarea [(ngModel)]="userInput" name="chatInput" rows="1" placeholder="Type your question..." (keydown)="handleKeydown($event)" [disabled]="loading"></textarea>
-    <button type="submit" [disabled]="loading || !userInput.trim()">Send</button>
+    <button type="submit" [disabled]="loading || !healthy || !userInput || !userInput.trim()">Send</button>
   </form>
 </div> 
